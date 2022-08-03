@@ -1,9 +1,12 @@
 package com.tlglearning.wordcount;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Stream;
 
 public class WordCounter {
 
@@ -52,12 +55,10 @@ public class WordCounter {
         .split("[\\W_]+");
   }
   void countWords(String[] words) {
-    for(String word : words) {
-      //DONE Check if word is already present as a key in counts:
-      //  if it's not present, add it to counts with a value of 1
-      //  otherwise, get the current value, add 1 to it, and update the map with the new value.
-      counts.put(word, get(word) + 1);
-      totalWords++;
-    }
+    Arrays
+        .stream(words)
+        .map((s) -> s.trim())
+        .filter((s) -> !s.isEmpty())
+        .forEach((word) -> counts.put(word,1 + counts.getOrDefault(word,0)));
   }
 }
